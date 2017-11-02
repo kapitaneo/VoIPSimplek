@@ -23,13 +23,14 @@ namespace VOIPSimplek.Core
 
         public List<String> CodecList
         {
-            get
-            {
-                List<String> slCodecs = new List<String>();
-                slCodecs.Add("PCMA");
-                return slCodecs;
-            }
-            set { }
+            get;
+            //{
+            //    //List<String> slCodecs = new List<String>();
+            //    //slCodecs.Add("PCMA");
+            //    //return slCodecs;
+            //}
+            set;// { }
+
         }
         public bool PublishEnabled { get => false; set => throw new NotImplementedException(); }
 
@@ -53,7 +54,7 @@ namespace VOIPSimplek.Core
         int _regState = 0;
         public int Index { get; set; }
         public string AccountName { get => "901"; set => throw new NotImplementedException(); }
-        public string HostName { get => "193.93.187.217:5038"; set => throw new NotImplementedException(); }
+        public string HostName { get => "193.93.187.217:5060"; set => throw new NotImplementedException(); }
         public string Id { get => "myId"; set => throw new NotImplementedException(); }
         public string UserName { get => "901"; set => throw new NotImplementedException(); }
         public string Password { get => "9d49c145849b09428e2e03a58477fa2f"; set => throw new NotImplementedException(); }

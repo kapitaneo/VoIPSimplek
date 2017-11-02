@@ -159,7 +159,7 @@ namespace VOIPSimplek
         public int stopTone()
         {
             player.Stop();
-            return 0;
+            return 1;
         }
     }
     //public class GUITimer : ITimer
