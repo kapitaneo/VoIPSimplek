@@ -27,6 +27,7 @@ namespace VOIPSimplek
     public partial class MainWindow : Window
     {
         string cs_Phone, cs_RegState, cs_CallState;
+        public string PhoneNumber { get; set; }
         CCallManager CallManager
         {
             get { return CCallManager.Instance; }
@@ -96,6 +97,7 @@ namespace VOIPSimplek
         private void OnIncomingCallNotification(Int32 iSessionId, String szNumber, String szInfo)
         {
             v_hIncomingCall = CallManager.getCall(iSessionId);
+            PhoneNumber = szNumber;
             cs_CallState = v_hIncomingCall.StateId.ToString();
         }
         #endregion
