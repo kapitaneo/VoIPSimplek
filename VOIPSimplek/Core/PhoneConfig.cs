@@ -38,6 +38,8 @@ namespace VOIPSimplek.Core
 
         public bool IsNull => false;
 
+        public IAccount Account => _acclist.FirstOrDefault();
+
         public void Save()
         {
             throw new NotImplementedException();
@@ -54,7 +56,7 @@ namespace VOIPSimplek.Core
         int _regState = 0;
         public int Index { get; set; }
         public string AccountName { get => "901"; set => throw new NotImplementedException(); }
-        public string HostName { get => "193.93.187.217:5060"; set => throw new NotImplementedException(); }
+        public string HostName { get => "193.93.185.190"; set => throw new NotImplementedException(); }
         public string Id { get => "myId"; set => throw new NotImplementedException(); }
         public string UserName { get => "901"; set => throw new NotImplementedException(); }
         public string Password { get => "9d49c145849b09428e2e03a58477fa2f"; set => throw new NotImplementedException(); }
@@ -63,5 +65,6 @@ namespace VOIPSimplek.Core
         public int RegState { get { return _regState; } set { _regState = value; } }
         public string ProxyAddress { get => ""; set => throw new NotImplementedException(); }
         public ETransportMode TransportMode { get => ETransportMode.TM_UDP; set => throw new NotImplementedException(); }
+        public bool Enabled { get => true; set => throw new NotImplementedException(); }
     }
 }

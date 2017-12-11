@@ -7,12 +7,11 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        <StackPanel>
+        <StackPanel Orientation="Horizontal">
         <Button Height="20"
                 Width="50"
-                Click="cs_Answer_Click"
-                Margin="38,196,429,103">Answer</Button>
-            <TextBox Text="{Binding PhoneNumber}"></TextBox>
+                Click="cs_Answer_Click">Answer</Button>
+            <TextBox Width="80" Height="40" Text="{Binding PhoneNumber}"></TextBox>
         </StackPanel>
     </Grid>
 </Window>
