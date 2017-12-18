@@ -9,7 +9,7 @@ namespace VOIPSimplek.Core
 {
     internal class PhoneConfig : IConfiguratorInterface
     {
-        public bool DNDFlag { get { return false; } set => throw new NotImplementedException(); }
+        public bool DNDFlag { get; set; }
         public bool AAFlag { get; set; }
         public bool CFUFlag { get { return false; } set => throw new NotImplementedException(); }
         public string CFUNumber { get ; set; }
@@ -42,7 +42,6 @@ namespace VOIPSimplek.Core
 
         public void Save()
         {
-            throw new NotImplementedException();
         }
 
         List<IAccount> _acclist = new List<IAccount>();

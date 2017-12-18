@@ -45,7 +45,7 @@ namespace VOIPSimplek
             InitializeComponent();
 
             CallManager.CallStateRefresh += new DCallStateRefresh(CallManager_CallStateRefresh);
-            CallManager.IncomingCallNotification += CallManager_IncomingCallNotification1;
+            CallManager.IncomingCallNotification += CallManager_IncomingCallNotification;
             //CallManager.IncomingCallNotification += new DIncomingCallNotification(CallManager_IncomingCallNotification);
             //pjsipRegistrar.Instance.AccountStateChanged += new Sipek.Common.DAccountStateChanged(Instance_AccountStateChanged);
             CCallManager.Instance.MediaProxy = new CMediaPlayerProxy();
@@ -53,7 +53,7 @@ namespace VOIPSimplek
             CallManager.StackProxy = pjsipStackProxy.Instance;
 
             ICallProxyInterface.CallStateChanged += ICallProxyInterface_CallStateChanged;
-            pjsipStackProxy.Instance.createCallProxy().holdCall();
+           // pjsipStackProxy.Instance.createCallProxy().holdCall();
 
             CallManager.Config = Config;
             pjsipStackProxy.Instance.Config = Config;
@@ -61,58 +61,42 @@ namespace VOIPSimplek
 
             CallManager.Initialize();
 
-            pjsipPresenceAndMessaging.Instance.MessageReceived += Instance_MessageReceived;
-            pjsipPresenceAndMessaging.Instance.BuddyStatusChanged += Instance_BuddyStatusChanged;
             var result = pjsipRegistrar.Instance.registerAccounts();
             var dssdf  = Sipek.Sip.SipConfigStruct.Instance;
             // Visibility = Visibility.Hidden;
             
         }
 
+        private void CallManager_IncomingCallNotification(int sessionId, string number, string info)
+        {
+            //throw new NotImplementedException();
+            Dispatcher.Invoke(new DIncomingCallNotification(OnIncomingCallNotification), new Object[] { sessionId, number, number});
+        }
+
         private void ICallProxyInterface_CallStateChanged(int callId, ESessionState callState, string info)
         {
             // throw new NotImplementedException();
-            
+
             var calls1 = CallManager.CallList;
-            
             if (IsAnswer == 1)
             {
-
                 IsAnswer++;
             }
             else if (IsAnswer == 2)
             {
+               //CallManager.Config.CFBFlag = false;
+               //CallManager.Config.DNDFlag = false;
+
                 var calls = CallManager.CallList;
-                calls1[1].Destroy();
+                int i = 0;
                 IsAnswer = 0;
             }
+            if (callState == ESessionState.SESSION_STATE_DISCONNECTED)
+            {
 
+            }
 
         }
-
-        private void Instance_BuddyStatusChanged(int buddyId, int status, string text)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void Instance_MessageReceived(string from, string text)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void CallManager_IncomingCallNotification1(int sessionId, string number, string info, IEnumerable<KeyValuePair<string, string>> headers)
-        {
-            Dispatcher.Invoke(new DIncomingCallNotification(OnIncomingCallNotification), new Object[] { sessionId, number, number, headers });
-        }
-
-        //private void CallManager_IncomingCallNotification(int iSessionId, string szNumber, string szInfo)
-        //{
-        //    //if (Dispatcher.CheckAccess())
-        //    //     Dispatcher.Invoke(new DIncomingCallNotification(OnIncomingCallNotification), new Object[] { iSessionId, szNumber, szInfo,  });
-        //    //else
-        //    //    OnIncomingCallNotification(iSessionId, szNumber, szInfo);
-        //}
-
         private void Instance_AccountStateChanged(int iAccountId, int iAccState)
         {
             //if (Dispatcher.CheckAccess())
@@ -138,14 +122,15 @@ namespace VOIPSimplek
 
         private void OnStateUpdate(Int32 iSessionId)
         {
-            //cs_CallState = CallManager.getCall(iSessionId).StateId.ToString();
-            //if (cs_CallState == "ACTIVE")
+            cs_CallState = CallManager.getCall(iSessionId).StateId.ToString();
+            pjsipStackProxy.Instance.Config.DNDFlag = false;
+            //if (cs_CallState == "")
             //{
             //    pjsipPresenceAndMessaging.Instance.setStatus(EUserStatus.BUSY);
             //}
         }
 
-        private void OnIncomingCallNotification(Int32 iSessionId, String szNumber, String szInfo, IEnumerable<KeyValuePair<string, string>> headers)
+        private void OnIncomingCallNotification(Int32 iSessionId, String szNumber, String szInfo)
         {
             v_hIncomingCall = CallManager.getCall(iSessionId);
             currentSession = iSessionId;
@@ -171,6 +156,9 @@ namespace VOIPSimplek
         {
             CallManager.onUserAnswer(v_hIncomingCall.Session);
             IsAnswer = 1;
+            pjsipStackProxy.Instance.Config.DNDFlag = true;
+            //pjsipStackProxy.Instance.Config.CFBFlag = true;
+            // CallManager.Config.Save();
             //var list = CallManager.enumCallsInState(EStateId.ACTIVE);
             // var list = CallManager.CallList;
         }

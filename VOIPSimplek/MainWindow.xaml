@@ -4,14 +4,25 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VOIPSimplek"
+        xmlns:gif="https://github.com/XamlAnimatedGif/XamlAnimatedGif"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow"
+        Height="350"
+        Width="525">
     <Grid>
         <StackPanel Orientation="Horizontal">
-        <Button Height="20"
-                Width="50"
-                Click="cs_Answer_Click">Answer</Button>
-            <TextBox Width="80" Height="40" Text="{Binding PhoneNumber}"></TextBox>
+            <Button Height="20"
+                    Width="50"
+                    Click="cs_Answer_Click">Answer</Button>
+            <TextBox Width="80"
+                     Height="40"
+                     Text="{Binding PhoneNumber}"></TextBox>
+            <Button Width="136"
+                    Margin="10,144,0,139">
+                <StackPanel Orientation="Horizontal">
+                    <Image gif:AnimationBehavior.SourceUri="../Resources/Images/incoming-call.gif" />
+                </StackPanel>
+            </Button>
         </StackPanel>
     </Grid>
 </Window>
