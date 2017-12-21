@@ -61,10 +61,16 @@ namespace VOIPSimplek
 
             CallManager.Initialize();
 
+            pjsipRegistrar.Instance.AccountStateChanged += Instance_AccountStateChanged1;
             var result = pjsipRegistrar.Instance.registerAccounts();
             var dssdf  = Sipek.Sip.SipConfigStruct.Instance;
             // Visibility = Visibility.Hidden;
             
+        }
+
+        private void Instance_AccountStateChanged1(int accountId, int accState)
+        {
+            var state = accState;
         }
 
         private void CallManager_IncomingCallNotification(int sessionId, string number, string info)
